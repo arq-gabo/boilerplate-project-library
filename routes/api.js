@@ -43,13 +43,7 @@ module.exports = function (app) {
             new BooksModel({ title })
               .save()
               .then((db) => res.json({ _id: db._id, title: db.title }))
-              .catch((e) => {
-                if (e.errors.title.value === "") {
-                  res.send("missing required field title");
-                } else {
-                  res.send("missing required field _id");
-                }
-              });
+              .catch((e) => res.send("missing required field title"));
           } else {
             res.json({ _id: db._id, title: db.title });
           }
