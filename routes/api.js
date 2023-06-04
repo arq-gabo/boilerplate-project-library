@@ -76,10 +76,12 @@ module.exports = function (app) {
         .catch((e) => res.send("no book exists"));
     })
 
-    .post(function (req, res, next) {
+    .post(function (req, res) {
       let bookid = req.params.id;
       let comment = req.body.comment;
       //json res format same as .get
+
+      console.log(`Bookid: ${bookid} ----- Comment: ${comment}`);
 
       if (comment !== "") {
         BooksModel.findById(bookid)

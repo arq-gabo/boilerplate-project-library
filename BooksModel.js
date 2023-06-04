@@ -6,11 +6,7 @@ const BookSchema = mongoose.Schema({
     required: true,
   },
 
-  comments: [
-    {
-      type: String,
-    },
-  ],
+  comments: [String],
 });
 
 module.exports = mongoose.model("Book", BookSchema);
