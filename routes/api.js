@@ -101,14 +101,7 @@ module.exports = function (app) {
               .catch((e) => res.send(e));
           })
           .catch((e) => {
-            if (
-              e.message ===
-              "Cannot read properties of null (reading 'comments')"
-            ) {
-              res.send("no book exists");
-            } else {
-              res.send("invalid _id");
-            }
+            res.send("no book exists");
           });
       } else {
         res.send("missing required field comment");
