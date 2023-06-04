@@ -1,0 +1,14 @@
+GET http://localhost:3000/api/books HTTP/1.1
+
+###
+
+DELETE http://localhost:3000/api/books/647bb80bce957f2c7e9294fe  HTTP/1.1
+Content-Type: application/json
+
+{
+    "_id": "647bb80bce957f2c7e9294fe"
+}
+
+###
+
+DELETE  http://localhost:3000/api/books HTTP/1.1
