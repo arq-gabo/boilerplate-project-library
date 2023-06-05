@@ -81,50 +81,28 @@ module.exports = function (app) {
       let comment = req.body.comment;
       //json res format same as .get
 
-      if (comment !== "") {
-        BooksModel.findByIdAndUpdate(bookid, {
-          $push: { comments: comment },
-          $inc: { __v: 1 },
-        })
-          .then((db) =>
-            res.json({
-              comments: [...db.comments, comment],
-              _id: db._id,
-              title: db.title,
-              commentcount: db.comments.length + 1,
-              __v: db.__v + 1,
+      BooksModel.findById(bookid)
+        .then((book) => {
+          if (comment) {
+            BooksModel.findByIdAndUpdate(book._id, {
+              $push: { comments: comment },
+              $inc: { __v: 1 },
             })
-          )
-          .catch((e) => res.send("no book exists"));
-      } else {
-        res.send("missing required field comment");
-      }
-
-      // if (comment !== "") {
-      //   BooksModel.findById(bookid)
-      //     .then((book) => {
-      //       let addComment = [...book.comments, comment];
-      //       BooksModel.findByIdAndUpdate(bookid, {
-      //         comments: addComment,
-      //         __v: (book.__v += 1),
-      //       })
-      //         .then((db) => {
-      //           res.json({
-      //             comments: addComment,
-      //             _id: db._id,
-      //             title: db.title,
-      //             commentcount: addComment.length,
-      //             __v: book.__v,
-      //           });
-      //         })
-      //         .catch((e) => res.send(e));
-      //     })
-      //     .catch((e) => {
-      //       res.send("no book exists");
-      //     });
-      // } else {
-      //   res.send("missing required field comment");
-      // }
+              .then((db) => {
+                res.json({
+                  comments: [...db.comments, comment],
+                  _id: db._id,
+                  title: db.title,
+                  commentcount: db.comments.length + 1,
+                  __v: db.__v + 1,
+                });
+              })
+              .catch((e) => res.send(e));
+          } else {
+            res.send("missing required field comment");
+          }
+        })
+        .catch((e) => res.send("no book exists"));
     })
 
     .delete(function (req, res) {
